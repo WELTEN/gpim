@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Inquiries</string>
-    <string name="glass_voice_trigger">new inquiry</string>
+    <string name="glass_voice_trigger">inquiries</string>
     <string name="glass_voice_prompt">Initalizating inquiry..</string>
 
     <string name="menu_option_1">Resume</string>

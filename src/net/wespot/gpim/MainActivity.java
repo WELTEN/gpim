@@ -1,5 +1,9 @@
 package net.wespot.gpim;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,10 +24,17 @@ import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 import com.google.android.glass.view.MenuUtils;
 import com.google.android.glass.widget.CardScrollView;
+import net.wespot.gpim.utils.BitmapUtils;
+import org.celstec.arlearn.delegators.INQ;
+import org.celstec.arlearn2.android.db.PropertiesAdapter;
+import org.celstec.arlearn2.android.delegators.ARL;
+import org.celstec.arlearn2.client.InquiryClient;
+import org.celstec.dao.gen.InquiryLocalObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyActivity extends Activity implements GestureDetector.BaseListener, LocationListener {
+public class MainActivity extends Activity implements GestureDetector.BaseListener, LocationListener {
 
     public static final String TAG = "MyActivity";
     public static final int TAP_WONDER_MOMENT = 0;
@@ -51,10 +62,14 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
 
-    private InquiryScrollAdapter mAdapter;
+    private MainAdapter mAdapter;
     private CardScrollView mView;
     private GestureDetector mDetector;
     private AudioManager mAudioManager;
+
+    public static int TEMP_MEMBERSHIP = InquiryClient.OPEN_MEMBERSHIP;
+    public static int TEMP_VISIBILITY = InquiryClient.VIS_PUBLIC;
+
 
     private Bitmap downsampledBitmap;
 
@@ -64,13 +79,44 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
 
     private static final int SELECT_VALUE = 100;
 
+
+    final String AUTH_TOKEN_TYPE = "oauth2:https://www.example.com/auth/login";
+    public static ArrayList data_collection = new ArrayList();
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_wonder_moment);
+//        setContentView(R.layout.set_wonder_moment);
+
+        INQ.init(this);
+        ARL.eventBus.register(this);
+
+//        INQ.accounts.disAuthenticate();
+//        ARL.properties.setAccount(1l);
+//        ARL.properties.setFullId("2:117769871710404943583");
+//
+//        // Authenticate the user
+//        INQ.properties.setAuthToken("ya29.fABUG6k0tR5adFzNny8avlV-uS82MdjK88ieqNhYJq5mCrFi71yc8FQh");
+//        INQ.properties.setIsAuthenticated();
+//        INQ.accounts.syncMyAccountDetails();
+
+        // New inquiry or existing one
+        if (INQ.inquiry.getCurrentInquiry() == null){
+            InquiryLocalObject inquiry = new InquiryLocalObject();
+            inquiry.setTitle("GGlass Inq: "+inquiry.getId());
+            inquiry.setTitle("Demo Inquiry from Google Glass: "+inquiry.getId());
+            CreateInquiryObject createInquiryObject = new CreateInquiryObject();
+            createInquiryObject.inquiry = inquiry;
+
+            // To invoke onEventBackgroundThread this line is needed
+            ARL.eventBus.post(createInquiryObject);
+            INQ.inquiry.setCurrentInquiry(inquiry);
+        }else{
+
+        }
 
         // Keep the screen on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -79,7 +125,7 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         // Set the adapter
-        mAdapter = new InquiryScrollAdapter(this);
+        mAdapter = new MainAdapter(this);
 
         mView = new CardScrollView(this) {
             @Override
@@ -97,6 +143,51 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
 
         mDetector = new GestureDetector(this).setBaseListener(this);
 
+        // TODO manage authentication
+        // manageAuthentication();
+
+    }
+
+    private void onEventBackgroundThread(CreateInquiryObject inquiryObject){
+        // * int $vis (Visibility: 0 -> Inquiry members only, 1 -> logged in users, 2 -> Public)
+        // int $membership (Membership: 0 -> Closed, 2 -> Open)
+        // public void createInquiry(InquiryLocalObject inquiry, AccountLocalObject account, int visibility, int membership)
+        PropertiesAdapter pa = PropertiesAdapter.getInstance();
+        if (pa != null) {
+            String token = pa.getAuthToken();
+            if (token != null && ARL.isOnline()) {
+                InquiryClient.getInquiryClient().createInquiry(token, inquiryObject.inquiry, INQ.accounts.getLoggedInAccount(), TEMP_VISIBILITY, TEMP_MEMBERSHIP, true);
+                INQ.inquiry.syncInquiries();
+            }
+        }
+    }
+
+    private class CreateInquiryObject {
+        public InquiryLocalObject inquiry;
+    }
+
+    private void manageAuthentication() {
+        /* Testing account manager
+         */
+        AccountManager accountManager = AccountManager.get(this);
+        // Use your Glassware's account type.
+        Account[] accounts = accountManager.getAccountsByType("com.example");
+
+        // Pick an account from the list of returned accounts.
+
+        Account account = accounts[0];
+
+        // Your auth token type.
+        accountManager.getAuthToken(account, AUTH_TOKEN_TYPE, null, this, new AccountManagerCallback<Bundle>() {
+            public void run(AccountManagerFuture<Bundle> future) {
+                try {
+                    String token = future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
+                    // Use the token.
+                } catch (Exception e) {
+                    // Handle exception.
+                }
+            }
+        }, null);
     }
 
     @Override
@@ -152,8 +243,9 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
             case R.id.data_collection_view_results:
                 Log.e(TAG, "View results");
 
-//                Intent data_collection_view_results = new Intent(this, ViewResultsActivity.class);
-//
+                Intent data_collection_view_results = new Intent(this, ResultsActivity.class);
+                startActivity(data_collection_view_results);
+
 ////                Bundle bundle = new Bundle();
 ////                bundle.putSerializable(VIEW_RESULTS, INQ.inquiry);
 ////                data_collection_view_results.putExtras(bundle);
@@ -269,6 +361,9 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
                 case RESULT_WONDER_MOMENT:
                     List<String> results_wonder_moment = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String txt_wonder_moment = results_wonder_moment.get(0);
+                    INQ.inquiry.getCurrentInquiry().setReflection(txt_wonder_moment);
+                    mAdapter.notifyDataSetChanged();
+
 //            int position = mView.getSelectedItemPosition();
 ////            SetTimerScrollAdapter.TimeComponents component =
 ////                    (SetTimerScrollAdapter.TimeComponents) mAdapter.getItem(position);
@@ -277,12 +372,15 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
 //////                    component, data.getIntExtra(SelectValueActivity.EXTRA_SELECTED_VALUE, 0));
 //                    INQ.inquiry.setWonder_moment(txt_wonder_moment);
 ////                    mAdapter.setInquiry(INQ.inquiry);
-                    mAdapter.notifyDataSetChanged();
                     break;
 
                 case RESULT_HYPOTHESIS:
                     List<String> results_hypothesis = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String txt_hypothesis = results_hypothesis.get(0);
+                    INQ.inquiry.getCurrentInquiry().setHypothesisTitle(txt_hypothesis);
+                    mAdapter.notifyDataSetChanged();
+
+
 //                    INQ.inquiry.setHypothesis(txt_hypothesis);
 ////                    mAdapter.setInquiry(INQ.inquiry);
 //                    mView.updateViews(true);
@@ -301,14 +399,14 @@ public class MyActivity extends Activity implements GestureDetector.BaseListener
 
                         private int counter = 0;
                         public void run() {
-//                            downsampledBitmap = BitmapUtils.decodeSampledBitmapFromPath(path_image, 200, 200);
-//                            if (downsampledBitmap == null) {
-//                                if (counter++ < 1000)
-//                                    mHandler.postDelayed(this, 500);
-//                            }else{
-//                                INQ.inquiry.addData(downsampledBitmap, null);
-//                                mView.updateViews(true);
-//                            }
+                            downsampledBitmap = BitmapUtils.decodeSampledBitmapFromPath(path_image, 200, 200);
+                            if (downsampledBitmap == null) {
+                                if (counter++ < 1000)
+                                    mHandler.postDelayed(this, 500);
+                            }else{
+                                data_collection.add(0, downsampledBitmap);
+                                mAdapter.notifyDataSetChanged();
+                            }
                         }
                     };
                     mHandler.postDelayed(checkImageTask, 1);

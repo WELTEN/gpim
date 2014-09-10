@@ -30,18 +30,15 @@ import org.celstec.arlearn.delegators.INQ;
  * Date: 04/07/14
  * ****************************************************************************
  */
-public class InquiryScrollAdapter extends CardScrollAdapter {
+public class MainAdapter extends CardScrollAdapter {
     private final Context mContext;
     private final long[] mValues;
-//    private Inquiry inquiry;
     public static final String TAG = "InquiryScrollAdapter";
 
-
-    public InquiryScrollAdapter(Context mContext) {
+    public MainAdapter(Context mContext) {
         this.mContext = mContext;
         mValues = new long[4];
     }
-
 
     @Override
     public int getCount() {
@@ -63,7 +60,7 @@ public class InquiryScrollAdapter extends CardScrollAdapter {
             switch (position){
                 case 0:
                     // Display wonder moment
-                    if (INQ.inquiry != null ){
+                    if (INQ.inquiry != null && INQ.inquiry.getCurrentInquiry() !=null ){
                         if (INQ.inquiry.getCurrentInquiry().getReflection() != null){
                             convertView = LayoutInflater.from(mContext).inflate(R.layout.display_wonder_moment, parent);
 
@@ -100,7 +97,7 @@ public class InquiryScrollAdapter extends CardScrollAdapter {
                     // Display data collection
 
 //                    int numberDataCollections = DaoConfiguration.getInstance().getGeneralItemLocalObjectDao().loadAll().size();
-                    int numberDataCollections = 4;
+                    int numberDataCollections = MainActivity.data_collection.size();
 
                     if (INQ.inquiry != null ){
                         if (numberDataCollections != 0){
