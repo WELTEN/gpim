@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/resume_inquiry"
+            android:title="@string/menu_option_1"
+    android:icon="@drawable/ic_launcher" />
+    <item
+            android:id="@+id/stop_inquiry"
+            android:title="@string/menu_option_2"
+            android:icon="@drawable/ic_launcher" />
+
+    <item
+            android:id="@+id/take_picture"
+            android:title="@string/menu_option_3"
+            android:icon="@drawable/ic_launcher" />
+
+    <item
+            android:id="@+id/record_video"
+            android:title="@string/menu_option_4"
+            android:icon="@drawable/ic_launcher" />
+
+
+</menu>

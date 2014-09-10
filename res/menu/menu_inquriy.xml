@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group
+            android:id="@+id/data_collection" >
+        <item
+                android:id="@+id/data_collection_view_results"
+                android:title="@string/menu_data_collection_view_results"
+                android:icon="@drawable/ic_launcher" />
+    </group>
+
+    <item
+            android:id="@+id/data_collection_take_picture"
+            android:title="@string/menu_data_collection_take_picture"
+            android:icon="@drawable/ic_launcher" />
+
+    <item
+            android:id="@+id/data_collection_record_video"
+            android:title="@string/menu_data_collection_record_video"
+            android:icon="@drawable/ic_launcher" />
+
+    <item
+            android:id="@+id/data_collection_collect_text"
+            android:title="@string/menu_data_collection_collect_text"
+            android:icon="@drawable/ic_launcher" />
+</menu>

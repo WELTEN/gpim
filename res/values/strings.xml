@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Inquiries</string>
+    <string name="glass_voice_trigger">new inquiry</string>
+    <string name="glass_voice_prompt">Initalizating inquiry..</string>
+
+    <string name="menu_option_1">Resume</string>
+    <string name="menu_option_1_description">Tap to complete and submit you new inquiry</string>
+    <string name="menu_option_2">Stop</string>
+    <string name="menu_option_2_description">Tap to delete this inquiry</string>
+    <string name="menu_option_3">Take picture</string>
+    <string name="menu_option_3_description">Quick picture for your inquiry</string>
+    <string name="menu_option_4">Record video</string>
+    <string name="menu_option_4_description">Quick video for your inquiry</string>
+
+
+    <string name="menu_data_collection_view_results">View data</string>
+    <string name="menu_data_collection_view_results_description">Tap to display data already collected</string>
+    <string name="menu_data_collection_take_picture">Take picture</string>
+    <string name="menu_data_collection_take_picture_description">Tap to take a picture</string>
+    <string name="menu_data_collection_record_video">Record video</string>
+    <string name="menu_data_collection_record_video_description">Tap to record a video</string>
+    <string name="menu_data_collection_collect_text">Create a note</string>
+    <string name="menu_data_collection_collect_text_description">Tap to create a voice note</string>
+
+    <string name="title_wonder_moment">What do you wonder about?</string>
+    <string name="description_wonder_moment">Tap to set your wonder moment</string>
+    <string name="description_wonder_moment2">Tap to edit your wonder moment</string>
+
+    <string name="title_hypothesis">Set your hypothesis</string>
+    <string name="description_hypothesis">Tap to set your hypothesis</string>
+    <string name="description_hypothesis2">Tap to edit your hypothesis</string>
+
+    <string name="title_collect_data">Collect data for your inquiry</string>
+    <string name="title_collect_data2">Data collection of your inquiry</string>
+    <string name="description_collect_data">Tap to access to media menu</string>
+
+    <plurals name="number_data_collected">
+        <item quantity="one">There is 1 data collected.</item>
+        <item quantity="other">There are %d data collected.</item>
+    </plurals>
+
+    <string name="title_save">Save</string>
+    <string name="description_save">Tap to save your inquiry</string>
+</resources>
