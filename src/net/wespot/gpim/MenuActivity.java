@@ -85,7 +85,7 @@ public class MenuActivity extends Activity {
                 return true;
             case R.id.take_picture:
                 Intent data_collection_intent_picture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(data_collection_intent_picture, MainActivity.RESULT_DATA_COLLECTION_PICTURE);
+                startActivityForResult(data_collection_intent_picture, InquiryActivity.RESULT_DATA_COLLECTION_PICTURE);
 //                Intent navIntent = new Intent(Intent.ACTION_VIEW,
 //                        Uri.parse("google.navigation:ll=37.4219795, - 122.0836669 & title = Googleplex"));
 //                startActivity(navIntent);

@@ -22,6 +22,11 @@
             android:icon="@drawable/ic_launcher" />
 
     <item
+            android:id="@+id/data_collection_record_audio"
+            android:title="@string/menu_data_collection_record_audio"
+            android:icon="@drawable/ic_launcher" />
+
+    <item
             android:id="@+id/data_collection_collect_text"
             android:title="@string/menu_data_collection_collect_text"
             android:icon="@drawable/ic_launcher" />

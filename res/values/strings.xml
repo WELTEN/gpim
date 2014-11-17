@@ -13,7 +13,6 @@
     <string name="menu_option_4">Record video</string>
     <string name="menu_option_4_description">Quick video for your inquiry</string>
 
-
     <string name="menu_data_collection_view_results">View data</string>
     <string name="menu_data_collection_view_results_description">Tap to display data already collected</string>
     <string name="menu_data_collection_take_picture">Take picture</string>
@@ -22,6 +21,8 @@
     <string name="menu_data_collection_record_video_description">Tap to record a video</string>
     <string name="menu_data_collection_collect_text">Create a note</string>
     <string name="menu_data_collection_collect_text_description">Tap to create a voice note</string>
+    <string name="menu_data_collection_record_audio">Record audio</string>
+    <string name="menu_data_collection_record_audio_description">Tap to create an audio recording</string>
 
     <string name="title_wonder_moment">What do you wonder about?</string>
     <string name="description_wonder_moment">Tap to set your wonder moment</string>
@@ -33,13 +34,16 @@
 
     <string name="title_collect_data">Collect data for your inquiry</string>
     <string name="title_collect_data2">Data collection of your inquiry</string>
-    <string name="description_collect_data">Tap to access to media menu</string>
+    <string name="description_collect_data">Tap to visualize data collections</string>
 
     <plurals name="number_data_collected">
-        <item quantity="one">There is 1 data collected.</item>
-        <item quantity="other">There are %d data collected.</item>
+        <item quantity="one">1 data collection</item>
+        <item quantity="other">%d data collections</item>
     </plurals>
 
     <string name="title_save">Save</string>
     <string name="description_save">Tap to save your inquiry</string>
+
+    <string name="inquiry_title">Inquiry title</string>
+    <string name="inquiry_description">Inquiry description</string>
 </resources>

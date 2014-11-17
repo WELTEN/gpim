@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000" android:layout_gravity="right|left">
+
+    <TextView android:id="@+id/inquiry_title"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/inquiry_title"
+              style="@style/SingleTitle"/>
+    <TextView android:id="@+id/inquiry_description"
+              android:layout_width="185dp"
+              android:layout_height="wrap_content"
+              android:text="@string/inquiry_description"
+              style="@style/SingleDescription"/>
+
+</RelativeLayout>
+

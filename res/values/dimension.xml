@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="textSizeDescription">13dp</dimen>
+
+    <dimen name="data_collect.thumbnail.image.size">100dp</dimen>
+    <dimen name="data_collect.thumbnail.image.spacing">1dp</dimen>
 </resources>

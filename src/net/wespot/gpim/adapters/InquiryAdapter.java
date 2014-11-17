@@ -1,4 +1,4 @@
-package net.wespot.gpim;
+package net.wespot.gpim.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.example.TestGlass_v1.R;
 import com.google.android.glass.widget.CardScrollAdapter;
 import org.celstec.arlearn.delegators.INQ;
+import org.celstec.dao.gen.GameLocalObject;
 
 /**
  * ****************************************************************************
@@ -30,12 +31,12 @@ import org.celstec.arlearn.delegators.INQ;
  * Date: 04/07/14
  * ****************************************************************************
  */
-public class MainAdapter extends CardScrollAdapter {
+public class InquiryAdapter extends CardScrollAdapter {
     private final Context mContext;
     private final long[] mValues;
     public static final String TAG = "InquiryScrollAdapter";
 
-    public MainAdapter(Context mContext) {
+    public InquiryAdapter(Context mContext) {
         this.mContext = mContext;
         mValues = new long[4];
     }
@@ -81,7 +82,7 @@ public class MainAdapter extends CardScrollAdapter {
                     // Display hypothesis
                     convertView = LayoutInflater.from(mContext).inflate(R.layout.set_hypothesis, parent);
 
-                    if (INQ.inquiry != null ){
+                    if (INQ.inquiry.getCurrentInquiry() != null ){
                         if (INQ.inquiry.getCurrentInquiry().getHypothesisTitle() != null){
 
                             final TextView[] views = new TextView[] {
@@ -96,27 +97,31 @@ public class MainAdapter extends CardScrollAdapter {
                 case 2:
                     // Display data collection
 
-//                    int numberDataCollections = DaoConfiguration.getInstance().getGeneralItemLocalObjectDao().loadAll().size();
-                    int numberDataCollections = MainActivity.data_collection.size();
-
                     if (INQ.inquiry != null ){
-                        if (numberDataCollections != 0){
 
-                            convertView = LayoutInflater.from(mContext).inflate(R.layout.data_collection, parent);
+                        // TODO it fails here very often
 
-                            final TextView[] views = new TextView[] {
-                                    (TextView) convertView.findViewById(R.id.title_number_data_collected),
-                                    (TextView) convertView.findViewById(R.id.description_data_collected)};
+                        if (INQ.inquiry.getCurrentInquiry().getRunLocalObject() != null) {
+                            GameLocalObject gameLocalObject = INQ.inquiry.getCurrentInquiry().getRunLocalObject().getGameLocalObject();
+                            if (gameLocalObject != null) {
+                                convertView = LayoutInflater.from(mContext).inflate(R.layout.data_collection, parent);
 
-                            String number_data_collected = mContext.getResources().getQuantityString(R.plurals.number_data_collected, numberDataCollections, numberDataCollections);
+                                final TextView[] views = new TextView[] {
+                                        (TextView) convertView.findViewById(R.id.title_number_data_collected),
+                                        (TextView) convertView.findViewById(R.id.description_data_collected)};
 
-                            views[0].setText(number_data_collected);
-                            views[1].setText(R.string.description_collect_data);
-                        }
-                        else{
+
+                                String number_data_collected = mContext.getResources().getQuantityString(R.plurals.number_data_collected, gameLocalObject.getGeneralItems().size(), gameLocalObject.getGeneralItems().size());
+
+
+                                views[0].setText(number_data_collected);
+                                views[1].setText(R.string.description_collect_data);
+                            }else{
+                                convertView = LayoutInflater.from(mContext).inflate(R.layout.set_collect_data, parent);
+                            }
+                        }else{
                             convertView = LayoutInflater.from(mContext).inflate(R.layout.set_collect_data, parent);
                         }
-
                     }else{
                         convertView = LayoutInflater.from(mContext).inflate(R.layout.set_collect_data, parent);
                     }
@@ -129,21 +134,6 @@ public class MainAdapter extends CardScrollAdapter {
                     break;
             }
         }
-//        final TextView[] views = new TextView[] {
-//                (TextView) convertView.findViewById(R.id.hours),
-//                (TextView) convertView.findViewById(R.id.minutes),
-//                (TextView) convertView.findViewById(R.id.seconds)
-//        };
-//        final TextView tipView = (TextView) convertView.findViewById(R.id.tip);
-//        final String tipLabel = mContext.getResources().getString(((TimeComponents) getItem(position)).getLabelResourceId());
-//
-//        tipView.setText(tipLabel);
-//
-//        for (int i = 0; i < 3; ++i) {
-//            views[i].setText(String.format("%02d", mValues[i]));
-//            views[i].setTextColor(mContext.getResources().getColor(R.color.gray));
-//        }
-//        views[position].setTextColor(mContext.getResources().getColor(R.color.white));
 
         return convertView;
     }

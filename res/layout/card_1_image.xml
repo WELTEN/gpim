@@ -10,23 +10,24 @@
         android:layout_alignParentRight="true"
         android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="#CC000000"
-        android:gravity="center"
-        android:visibility="gone" />
+    <VideoView
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/filter_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="#CC000000"
-        android:gravity="center" />
+    <TextView android:id="@+id/caption"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              style="@style/SingleTitle"
+              android:visibility="gone"/>
+
+    <TextView android:id="@+id/filter_name"
+              android:layout_width="185dp"
+              android:layout_height="wrap_content"
+              android:visibility="gone"
+              style="@style/SingleDescription"/>
 
 </RelativeLayout>
