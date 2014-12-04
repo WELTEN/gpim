@@ -40,10 +40,13 @@ public class MainActivity extends Activity implements GestureDetector.BaseListen
 
         INQ.accounts.disAuthenticate();
         INQ.properties.setAccount(1l);
-        INQ.properties.setFullId("2:117769871710404943583");
 
-        // Authenticate the user
-        INQ.properties.setAuthToken("ya29.lgBVhf29NWlBqgWx91sxfZNrumLJeR0IVI8kDZABaE8pON2Vqs-Ps-ZM");
+        INQ.properties.setFullId("5:wespot1");
+        INQ.properties.setAuthToken("e83f6512c98bb1689fbeebc63b9f47fb");
+
+//        INQ.properties.setFullId("2:117769871710404943583");
+//        INQ.properties.setAuthToken("ya29.lgBVhf29NWlBqgWx91sxfZNrumLJeR0IVI8kDZABaE8pON2Vqs-Ps-ZM");
+
         INQ.properties.setIsAuthenticated();
         INQ.accounts.syncMyAccountDetails();
 
