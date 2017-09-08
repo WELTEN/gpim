@@ -21,6 +21,7 @@ package net.wespot.gpim;
  * Date: 04/07/14
  * ****************************************************************************
  */
+
 import android.app.Activity;
 import android.content.Intent;
 import android.provider.MediaStore;
